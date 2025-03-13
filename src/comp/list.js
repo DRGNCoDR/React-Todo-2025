@@ -4,7 +4,6 @@ function List () {
     return(
         <>
             <h1>React Todos (List)</h1>
-
         </>
     )
 }
