@@ -1,16 +1,40 @@
 import React, { useEffect, useState } from "react";
 
-import Add from "./comp/add"
-import List from "./comp/list"
-
 function Todos() {
-    const [todos, setTodo] = useState({})
-    
+    const [todos, setTodo] = useState([{}])
+    const [description, setTitle] = useState('');
+
+    function addTodo(){
+        if(description != ""){
+            const todo = {
+                title : description,
+                complete : false
+            }
+            setTodo(
+                [
+                    ...todos,
+                    {
+                        title : description,
+                        complete: false
+                    }
+                ]
+            )
+            //console.log(todos)
+        }
+    }
     return (
         <div>
-            <h1>Todos</h1>
-            <Add />
-            <List />
+            <input
+                name="todo-title"
+                value={description}
+                placeholder="Enter a title for todo"
+                onChange={e => setTitle(e.target.value)}
+            />
+            <button
+                onClick={addTodo}
+            >
+                +
+            </button>
         </div>
     )
 }
