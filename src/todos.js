@@ -1,40 +1,66 @@
 import React, { useEffect, useState } from "react";
 
 function Todos() {
-    const [todos, setTodo] = useState([{}])
+    const [todos, setTodo] = useState([])
     const [description, setTitle] = useState('');
 
-    function addTodo(){
-        if(description != ""){
-            const todo = {
+    function addTodo()
+    {
+        if(description != "")
+        {
+            const newTodo =
+            {
+                id : Date.now(),
                 title : description,
-                complete : false
+                complete : false //TODO: passed in value
             }
             setTodo(
                 [
                     ...todos,
-                    {
-                        title : description,
-                        complete: false
-                    }
+                    newTodo
                 ]
             )
-            //console.log(todos)
         }
+    }
+    function completeTodo(){
+
+    }
+    function List(){
+        const todoList = todos.map((todo) =>
+            <li key = {todo.id}>
+                <input
+                    type = "checkbox"
+                    value = {todo.complete}
+                    checked = {todo.complete}
+                    onChange = {completeTodo}
+                />
+                {todo.title}
+                {/* <button onClick={}>X</button> */}
+            </li>
+
+        )
+        return (
+            <ol>
+                {todoList}
+            </ol>
+        )
     }
     return (
         <div>
             <input
-                name="todo-title"
-                value={description}
-                placeholder="Enter a title for todo"
-                onChange={e => setTitle(e.target.value)}
+                name = "todo-title"
+                value = {description}
+                placeholder = "Enter a title for todo"
+                onChange = {e => setTitle(e.target.value)}
             />
             <button
-                onClick={addTodo}
+                onClick = {addTodo}
             >
                 +
             </button>
+            <div>
+                <List/>
+            </div>
         </div>
     )
 }
