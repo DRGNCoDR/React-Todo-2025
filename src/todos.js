@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 function Todos() {
+    const todoComplete ={
+        color: "green",
+        textDecoration: 'line-through'
+    };
+
     const [todos, setTodo] = useState([])
     const [description, setTitle] = useState('');
 
@@ -22,22 +27,38 @@ function Todos() {
             )
         }
     }
-    function completeTodo(){
-
+    function completeTodo(id){
+        const newTodos = [...todos];
+        newTodos.forEach(
+            (todo) =>
+            {
+                if(todo.id == id){
+                    todo.complete = !todo.complete
+                }
+            }
+        )
+        setTodo(newTodos);
     }
     function List(){
         const todoList = todos.map((todo) =>
             <li key = {todo.id}>
                 <input
                     type = "checkbox"
-                    value = {todo.complete}
                     checked = {todo.complete}
-                    onChange = {completeTodo}
+                    onChange = {() => completeTodo(todo.id)}
                 />
-                {todo.title}
+                <span
+                    style=
+                    {
+                        todo.complete
+                            ? todoComplete
+                            : {}
+                    }
+                >
+                    {todo.title}
+                </span>
                 {/* <button onClick={}>X</button> */}
             </li>
-
         )
         return (
             <ol>
