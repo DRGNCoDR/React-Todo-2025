@@ -9,16 +9,26 @@ function Todos() {
     const [todos, setTodo] = useState([])
     const [description, setTitle] = useState('');
 
+    function generateNewID()
+    {
+        return Date.now().toString(36)
+    }
+
+    function getCurrentTodos()
+    {
+        return [...todos]
+    }
+
     function addTodo()
     {
+        const newTodo =
+        {
+            id : generateNewID(),
+            title : description,
+            complete : false
+        }
         if(description != "")
         {
-            const newTodo =
-            {
-                id : Date.now(),
-                title : description,
-                complete : false //TODO: passed in value
-            }
             setTodo(
                 [
                     ...todos,
@@ -27,9 +37,12 @@ function Todos() {
             )
         }
     }
-    function completeTodo(id){
-        const newTodos = [...todos];
-        newTodos.forEach(
+
+    function completeTodo(id)
+    {
+        const newTodos = getCurrentTodos()
+        newTodos.forEach
+        (
             (todo) =>
             {
                 if(todo.id == id){
@@ -39,16 +52,29 @@ function Todos() {
         )
         setTodo(newTodos);
     }
-    function List(){
-        const todoList = todos.map((todo) =>
+
+    function deleteTodo(id)
+    {
+        const currTodos = getCurrentTodos()
+        const filteredTodos = currTodos.filter
+        (
+            (todo) => todo.id !== id
+        )
+        setTodo(filteredTodos)
+    }
+
+    function List()
+    {
+        const todoList = todos.map(
+            (todo) =>
             <li key = {todo.id}>
                 <input
                     type = "checkbox"
                     checked = {todo.complete}
-                    onChange = {() => completeTodo(todo.id)}
+                    onChange={() => completeTodo(todo.id)}
                 />
                 <span
-                    style=
+                    style =
                     {
                         todo.complete
                             ? todoComplete
@@ -57,7 +83,11 @@ function Todos() {
                 >
                     {todo.title}
                 </span>
-                {/* <button onClick={}>X</button> */}
+                <button
+                    onClick={() => deleteTodo(todo.id) }
+                >
+                    X
+                </button>
             </li>
         )
         return (
@@ -80,7 +110,7 @@ function Todos() {
                 +
             </button>
             <div>
-                <List/>
+                <List />
             </div>
         </div>
     )
