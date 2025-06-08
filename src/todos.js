@@ -63,6 +63,20 @@ function Todos() {
         setTodo(filteredTodos)
     }
 
+    function editTodo(id)
+    {
+        const newTodos = getCurrentTodos()
+        newTodos.forEach
+        (
+            (todo) =>
+            {
+                if(todo.id == id){
+                    todo.title = description
+                }
+            }
+        )
+        setTodo(newTodos);
+    }
     function List()
     {
         const todoList = todos.map(
@@ -83,6 +97,11 @@ function Todos() {
                 >
                     {todo.title}
                 </span>
+                <button
+                    onClick={() => editTodo(todo.id) }
+                >
+                    E
+                </button>
                 <button
                     onClick={() => deleteTodo(todo.id) }
                 >
