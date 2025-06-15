@@ -88,7 +88,14 @@ function Todos() {
 
         setTodo(newTodos);
     }
-
+    function saveTodos(){
+        const todos = getCurrentTodos()
+        localStorage.setItem("Todos", JSON.stringify(todos))
+    }
+    function loadTodos(){
+        const todos = JSON.parse(localStorage.getItem("Todos"))
+        setTodo(todos)
+    }
     //Button Components
     function AddButton(){
         return (
@@ -119,6 +126,28 @@ function Todos() {
                     onClick={() => deleteTodo(id) }
                 >
                     X
+                </button>
+            </span>
+        )
+    }
+    function SaveButton(){
+        return (
+            <span>
+                <button
+                    onClick={() => saveTodos() }
+                >
+                    Save Current Todos
+                </button>
+            </span>
+        )
+    }
+    function LoadButton(){
+        return (
+            <span>
+                <button
+                    onClick={() => loadTodos() }
+                >
+                    Load Todos
                 </button>
             </span>
         )
@@ -169,6 +198,10 @@ function Todos() {
     //Main return for Todos
     return (
         <div>
+            <div>
+                <SaveButton />
+                <LoadButton />
+            </div>
             <input
                 name = "todo-title"
                 value = {description}
