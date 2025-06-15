@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 
 function Todos() {
+    //Styling
     const todoComplete ={
         color: "green",
         textDecoration: 'line-through'
     };
 
+    //Hooks
     const [todos, setTodo] = useState([])
     const [description, setTitle] = useState('');
 
+    //Logic functions
     function generateNewID()
     {
         return Date.now().toString(36)
     }
-
     function getCurrentTodos()
     {
         return [...todos]
     }
-
     function addTodo()
     {
         const newTodo =
@@ -27,8 +28,15 @@ function Todos() {
             title : description,
             complete : false
         }
+
         if(description != "")
         {
+            const newTodo =
+            {
+                id : Date.now(),
+                title : description,
+                complete : false //TODO: passed in value
+            }
             setTodo(
                 [
                     ...todos,
@@ -37,10 +45,10 @@ function Todos() {
             )
         }
     }
-
     function completeTodo(id)
     {
         const newTodos = getCurrentTodos()
+
         newTodos.forEach
         (
             (todo) =>
@@ -50,22 +58,24 @@ function Todos() {
                 }
             }
         )
+
         setTodo(newTodos);
     }
-
     function deleteTodo(id)
     {
         const currTodos = getCurrentTodos()
+
         const filteredTodos = currTodos.filter
         (
             (todo) => todo.id !== id
         )
+
         setTodo(filteredTodos)
     }
-
     function editTodo(id)
     {
         const newTodos = getCurrentTodos()
+
         newTodos.forEach
         (
             (todo) =>
@@ -75,38 +85,78 @@ function Todos() {
                 }
             }
         )
+
         setTodo(newTodos);
+    }
+
+    //Button Components
+    function AddButton(){
+        return (
+            <span>
+                <button
+                    onClick = {addTodo}
+                >
+                    +
+                </button>
+            </span>
+        )
+    }
+    function EditButton({id}){
+        return (
+            <span>
+                <button
+                    onClick={() => editTodo(id) }
+                >
+                    E
+                </button>
+            </span>
+        )
+    }
+    function DeleteButton({id}){
+        return (
+            <span>
+                <button
+                    onClick={() => deleteTodo(id) }
+                >
+                    X
+                </button>
+            </span>
+        )
+    }
+    function CompleteCheckbox({id, complete}){
+        return(
+            <input
+                type = "checkbox"
+                checked = {complete}
+                onChange = {() => completeTodo(id)}
+            />
+        )
+    }
+
+    //View/Display Components
+    function TodoTitle({complete, title}){
+        return(
+            <span
+                style =
+                {
+                    complete
+                        ? todoComplete
+                        : {}
+                }
+            >
+                {title}
+            </span>
+        )
     }
     function List()
     {
         const todoList = todos.map(
             (todo) =>
             <li key = {todo.id}>
-                <input
-                    type = "checkbox"
-                    checked = {todo.complete}
-                    onChange={() => completeTodo(todo.id)}
-                />
-                <span
-                    style =
-                    {
-                        todo.complete
-                            ? todoComplete
-                            : {}
-                    }
-                >
-                    {todo.title}
-                </span>
-                <button
-                    onClick={() => editTodo(todo.id) }
-                >
-                    E
-                </button>
-                <button
-                    onClick={() => deleteTodo(todo.id) }
-                >
-                    X
-                </button>
+                <CompleteCheckbox  complete = {todo.complete} id = {todo.id}/>
+                <TodoTitle complete = {todo.complete} title = {todo.title}/>
+                <EditButton id = {todo.id} />
+                <DeleteButton id = {todo.id}/>
             </li>
         )
         return (
@@ -115,6 +165,8 @@ function Todos() {
             </ol>
         )
     }
+
+    //Main return for Todos
     return (
         <div>
             <input
@@ -123,13 +175,9 @@ function Todos() {
                 placeholder = "Enter a title for todo"
                 onChange = {e => setTitle(e.target.value)}
             />
-            <button
-                onClick = {addTodo}
-            >
-                +
-            </button>
+            <AddButton />
             <div>
-                <List />
+                <List/>
             </div>
         </div>
     )
