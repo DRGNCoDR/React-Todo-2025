@@ -88,16 +88,20 @@ function Todos() {
 
         setTodo(newTodos);
     }
-    function saveTodos(){
+    function saveTodos()
+    {
         const todos = getCurrentTodos()
         localStorage.setItem("Todos", JSON.stringify(todos))
     }
-    function loadTodos(){
+    function loadTodos()
+    {
         const todos = JSON.parse(localStorage.getItem("Todos"))
         setTodo(todos)
     }
+
     //Button Components
-    function AddButton(){
+    function AddButton()
+    {
         return (
             <span>
                 <button
@@ -108,7 +112,8 @@ function Todos() {
             </span>
         )
     }
-    function EditButton({id}){
+    function EditButton({id})
+    {
         return (
             <span>
                 <button
@@ -119,7 +124,8 @@ function Todos() {
             </span>
         )
     }
-    function DeleteButton({id}){
+    function DeleteButton({id})
+    {
         return (
             <span>
                 <button
@@ -130,7 +136,8 @@ function Todos() {
             </span>
         )
     }
-    function SaveButton(){
+    function SaveButton()
+    {
         return (
             <span>
                 <button
@@ -141,7 +148,8 @@ function Todos() {
             </span>
         )
     }
-    function LoadButton(){
+    function LoadButton()
+    {
         return (
             <span>
                 <button
@@ -152,7 +160,8 @@ function Todos() {
             </span>
         )
     }
-    function CompleteCheckbox({id, complete}){
+    function CompleteCheckbox({id, complete})
+    {
         return(
             <input
                 type = "checkbox"
@@ -163,7 +172,8 @@ function Todos() {
     }
 
     //View/Display Components
-    function TodoTitle({complete, title}){
+    function TodoTitle({complete, title})
+    {
         return(
             <span
                 style =
@@ -194,6 +204,36 @@ function Todos() {
             </ol>
         )
     }
+    function PercentageDisplay()
+    {
+        let totalTodos = todos.length
+        let completeCount = 0
+        let percentage = 0
+
+        todos.forEach(todo => {
+            if(todo.complete){
+                completeCount += 1
+            }
+        });
+
+        percentage = Math.floor(
+            (completeCount / totalTodos) * 100
+        )
+
+        return(
+            <p>
+                {completeCount} of {totalTodos} completed
+                    (
+                        {
+                            completeCount > 0
+                            ? percentage
+                            : 0
+                        }
+                        %
+                    )
+            </p>
+        )
+    }
 
     //Main return for Todos
     return (
@@ -202,14 +242,17 @@ function Todos() {
                 <SaveButton />
                 <LoadButton />
             </div>
-            <input
-                name = "todo-title"
-                value = {description}
-                placeholder = "Enter a title for todo"
-                onChange = {e => setTitle(e.target.value)}
-            />
-            <AddButton />
             <div>
+                <input
+                    name = "todo-title"
+                    value = {description}
+                    placeholder = "Enter a title for todo"
+                    onChange = {e => setTitle(e.target.value)}
+                />
+                <AddButton />
+            </div>
+            <div>
+                <PercentageDisplay />
                 <List/>
             </div>
         </div>
