@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-function Todos() {
+function Todos() 
+{
     //Styling
-    const todoComplete ={
+    const todoComplete = 
+    {
         color: "green",
         textDecoration: 'line-through'
     };
@@ -16,10 +18,12 @@ function Todos() {
     {
         return Date.now().toString(36)
     }
+    
     function getCurrentTodos()
     {
         return [...todos]
     }
+    
     function addTodo()
     {
         const newTodo =
@@ -29,7 +33,7 @@ function Todos() {
             complete : false
         }
 
-        if(description != "")
+        if (description != "")
         {
             const newTodo =
             {
@@ -45,6 +49,7 @@ function Todos() {
             )
         }
     }
+    
     function completeTodo(id)
     {
         const newTodos = getCurrentTodos()
@@ -61,6 +66,7 @@ function Todos() {
 
         setTodo(newTodos);
     }
+   
     function deleteTodo(id)
     {
         const currTodos = getCurrentTodos()
@@ -72,6 +78,7 @@ function Todos() {
 
         setTodo(filteredTodos)
     }
+    
     function editTodo(id)
     {
         const newTodos = getCurrentTodos()
@@ -80,7 +87,7 @@ function Todos() {
         (
             (todo) =>
             {
-                if(todo.id == id){
+                if (todo.id == id){
                     todo.title = description
                 }
             }
@@ -88,11 +95,13 @@ function Todos() {
 
         setTodo(newTodos);
     }
+    
     function saveTodos()
     {
         const todos = getCurrentTodos()
         localStorage.setItem("Todos", JSON.stringify(todos))
     }
+    
     function loadTodos()
     {
         const todos = JSON.parse(localStorage.getItem("Todos"))
@@ -112,6 +121,7 @@ function Todos() {
             </span>
         )
     }
+    
     function EditButton({id})
     {
         return (
@@ -124,6 +134,7 @@ function Todos() {
             </span>
         )
     }
+    
     function DeleteButton({id})
     {
         return (
@@ -136,6 +147,7 @@ function Todos() {
             </span>
         )
     }
+    
     function SaveButton()
     {
         return (
@@ -148,6 +160,7 @@ function Todos() {
             </span>
         )
     }
+    
     function LoadButton()
     {
         return (
@@ -160,7 +173,13 @@ function Todos() {
             </span>
         )
     }
-    function CompleteCheckbox({id, complete})
+    
+    function CompleteCheckbox(
+        {
+            id,
+            complete
+        }
+    )
     {
         return(
             <input
@@ -172,7 +191,12 @@ function Todos() {
     }
 
     //View/Display Components
-    function TodoTitle({complete, title})
+    function TodoTitle(
+        {
+            complete,
+            title
+        }
+    )
     {
         return(
             <span
@@ -187,13 +211,20 @@ function Todos() {
             </span>
         )
     }
+    
     function List()
     {
         const todoList = todos.map(
             (todo) =>
             <li key = {todo.id}>
-                <CompleteCheckbox  complete = {todo.complete} id = {todo.id}/>
-                <TodoTitle complete = {todo.complete} title = {todo.title}/>
+                <CompleteCheckbox  
+                    complete = {todo.complete} 
+                    id = {todo.id}
+                />
+                <TodoTitle 
+                    complete = {todo.complete}
+                    title = {todo.title}
+                />
                 <EditButton id = {todo.id} />
                 <DeleteButton id = {todo.id}/>
             </li>
@@ -204,6 +235,7 @@ function Todos() {
             </ol>
         )
     }
+    
     function PercentageDisplay()
     {
         let totalTodos = todos.length
@@ -211,7 +243,7 @@ function Todos() {
         let percentage = 0
 
         todos.forEach(todo => {
-            if(todo.complete){
+            if (todo.complete){
                 completeCount += 1
             }
         });
@@ -220,7 +252,7 @@ function Todos() {
             (completeCount / totalTodos) * 100
         )
 
-        return(
+        return (
             <p>
                 {completeCount} of {totalTodos} completed
                     (
