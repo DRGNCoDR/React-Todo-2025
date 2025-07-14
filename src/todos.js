@@ -1,293 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React from "react"
+import {useState} from "react"
+import Add from "./comp/add"
+import List from "./comp/list"
 
-function Todos() 
-{
-    //Styling
-    const todoComplete = 
-    {
-        color: "green",
-        textDecoration: 'line-through'
-    };
+function Todos() {
+    const border1 = {
+        border : "1px solid black"
+    }
+    const border2 = {
+        border : "2px dotted black"
+    }
+    const pad5 = {
+        padding : "5px"
+    }
+    const margin5 = {
+        margin : "5px"
+    }
 
-    //Hooks
     const [todos, setTodo] = useState([])
-    const [description, setTitle] = useState('');
 
-    //Logic functions
-    function generateNewID()
-    {
-        return Date.now().toString(36)
-    }
-    
-    function getCurrentTodos()
-    {
-        return [...todos]
-    }
-    
-    function addTodo()
-    {
-        const newTodo =
-        {
-            id : generateNewID(),
-            title : description,
-            complete : false
-        }
-
-        if (description != "")
-        {
-            const newTodo =
-            {
-                id : Date.now(),
-                title : description,
-                complete : false //TODO: passed in value
-            }
-            setTodo(
-                [
-                    ...todos,
-                    newTodo
-                ]
-            )
-        }
-    }
-    
-    function completeTodo(id)
-    {
-        const newTodos = getCurrentTodos()
-
-        newTodos.forEach
-        (
-            (todo) =>
-            {
-                if(todo.id == id){
-                    todo.complete = !todo.complete
-                }
-            }
-        )
-
-        setTodo(newTodos);
-    }
-   
-    function deleteTodo(id)
-    {
-        const currTodos = getCurrentTodos()
-
-        const filteredTodos = currTodos.filter
-        (
-            (todo) => todo.id !== id
-        )
-
-        setTodo(filteredTodos)
-    }
-    
-    function editTodo(id)
-    {
-        const newTodos = getCurrentTodos()
-
-        newTodos.forEach
-        (
-            (todo) =>
-            {
-                if (todo.id == id){
-                    todo.title = description
-                }
-            }
-        )
-
-        setTodo(newTodos);
-    }
-    
-    function saveTodos()
-    {
-        const todos = getCurrentTodos()
-        localStorage.setItem("Todos", JSON.stringify(todos))
-    }
-    
-    function loadTodos()
-    {
-        const todos = JSON.parse(localStorage.getItem("Todos"))
-        setTodo(todos)
-    }
-
-    //Button Components
-    function AddButton()
-    {
-        return (
-            <span>
-                <button
-                    onClick = {addTodo}
-                >
-                    +
-                </button>
-            </span>
-        )
-    }
-    
-    function EditButton({id})
-    {
-        return (
-            <span>
-                <button
-                    onClick={() => editTodo(id) }
-                >
-                    E
-                </button>
-            </span>
-        )
-    }
-    
-    function DeleteButton({id})
-    {
-        return (
-            <span>
-                <button
-                    onClick={() => deleteTodo(id) }
-                >
-                    X
-                </button>
-            </span>
-        )
-    }
-    
-    function SaveButton()
-    {
-        return (
-            <span>
-                <button
-                    onClick={() => saveTodos() }
-                >
-                    Save Current Todos
-                </button>
-            </span>
-        )
-    }
-    
-    function LoadButton()
-    {
-        return (
-            <span>
-                <button
-                    onClick={() => loadTodos() }
-                >
-                    Load Todos
-                </button>
-            </span>
-        )
-    }
-    
-    function CompleteCheckbox(
-        {
-            id,
-            complete
-        }
-    )
-    {
-        return(
-            <input
-                type = "checkbox"
-                checked = {complete}
-                onChange = {() => completeTodo(id)}
-            />
-        )
-    }
-
-    //View/Display Components
-    function TodoTitle(
-        {
-            complete,
-            title
-        }
-    )
-    {
-        return(
-            <span
-                style =
-                {
-                    complete
-                        ? todoComplete
-                        : {}
-                }
-            >
-                {title}
-            </span>
-        )
-    }
-    
-    function List()
-    {
-        const todoList = todos.map(
-            (todo) =>
-            <li key = {todo.id}>
-                <CompleteCheckbox  
-                    complete = {todo.complete} 
-                    id = {todo.id}
-                />
-                <TodoTitle 
-                    complete = {todo.complete}
-                    title = {todo.title}
-                />
-                <EditButton id = {todo.id} />
-                <DeleteButton id = {todo.id}/>
-            </li>
-        )
-        return (
-            <ol>
-                {todoList}
-            </ol>
-        )
-    }
-    
-    function PercentageDisplay()
-    {
-        let totalTodos = todos.length
-        let completeCount = 0
-        let percentage = 0
-
-        todos.forEach(todo => {
-            if (todo.complete){
-                completeCount += 1
-            }
-        });
-
-        percentage = Math.floor(
-            (completeCount / totalTodos) * 100
-        )
-
-        return (
-            <p>
-                {completeCount} of {totalTodos} completed
-                    (
-                        {
-                            completeCount > 0
-                            ? percentage
-                            : 0
-                        }
-                        %
-                    )
-            </p>
-        )
-    }
-
-    //Main return for Todos
     return (
-        <div>
-            <div>
-                <SaveButton />
-                <LoadButton />
-            </div>
-            <div>
-                <input
-                    name = "todo-title"
-                    value = {description}
-                    placeholder = "Enter a title for todo"
-                    onChange = {e => setTitle(e.target.value)}
+        <div style={border1}>
+            <div style={{
+                    ...border1,
+                    ...pad5,
+                    ...margin5
+                }}
+            >
+                <Add
+                    todos={todos}
+                    setTodo={setTodo}
                 />
-                <AddButton />
             </div>
-            <div>
-                <PercentageDisplay />
-                <List/>
+
+            <div style={{
+                    ...border2,
+                    ...pad5,
+                    ...margin5
+                }}
+            >
+                <List
+                    todos={todos}
+                />
             </div>
         </div>
     )
 }
-export default Todos;
+export default Todos
+//Axel: Max line per file 100

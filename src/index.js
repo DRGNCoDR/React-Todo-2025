@@ -1,10 +1,9 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
+import React from "react"
+import {createRoot} from "react-dom/client"
+import Todos from "./todos"
 
-import Todos from './todos'
-
-const domNode = document.getElementById('root');
-const root = createRoot(domNode);
+const domNode = document.getElementById("root")
+const root = createRoot(domNode)
 
 function App() {
     return (
@@ -15,6 +14,6 @@ function App() {
     )
 }
 
-export default App;
+export default App
 
-root.render(<App />);
+root.render(<App />)
