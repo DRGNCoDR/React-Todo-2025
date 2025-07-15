@@ -1,7 +1,7 @@
 import React from "react"
 import {useState} from "react"
 
-function Add ({ todos, setTodo }) {
+function Add ({todos, setTodo}) {
     const [title, setTitle] = useState("")
 
     function addTodo() {

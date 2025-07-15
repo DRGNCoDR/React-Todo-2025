@@ -20,27 +20,29 @@ function Todos() {
     const [todos, setTodo] = useState([])
 
     return (
-        <div style={border1}>
-            <div style={{
+        <div style = {border1}>
+            <div
+                style = {{
                     ...border1,
                     ...pad5,
                     ...margin5
                 }}
             >
                 <Add
-                    todos={todos}
-                    setTodo={setTodo}
+                    todos = {todos}
+                    setTodo = {setTodo}
                 />
             </div>
 
-            <div style={{
+            <div
+                style = {{
                     ...border2,
                     ...pad5,
                     ...margin5
                 }}
             >
                 <List
-                    todos={todos}
+                    todos = {todos}
                 />
             </div>
         </div>
