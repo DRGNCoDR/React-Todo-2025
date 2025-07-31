@@ -3,11 +3,11 @@ import React from "react"
 function List({todos}) {
     const todoList = todos.map(
         (todo) =>
-        <li
-            key = {todo.id}
-        >
-            {todo.title}
-        </li>
+            <li
+                key = {todo.id}
+            >
+                {todo.title}
+            </li>
     )
 
     return (
@@ -18,5 +18,6 @@ function List({todos}) {
         </div>
     )
 }
+
 export default List
 //Axel: Max line per file 100

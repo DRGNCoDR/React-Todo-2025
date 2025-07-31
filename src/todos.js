@@ -1,5 +1,4 @@
-import React from "react"
-import {useState} from "react"
+import React, {useState} from "react"
 import Add from "./comp/add"
 import List from "./comp/list"
 
@@ -10,9 +9,11 @@ function Todos() {
     const border2 = {
         border : "2px dotted black"
     }
+
     const pad5 = {
         padding : "5px"
     }
+
     const margin5 = {
         margin : "5px"
     }
@@ -22,11 +23,13 @@ function Todos() {
     return (
         <div style = {border1}>
             <div
-                style = {{
-                    ...border1,
-                    ...pad5,
-                    ...margin5
-                }}
+                style = {
+                    {
+                        ...border1,
+                        ...pad5,
+                        ...margin5
+                    }
+                }
             >
                 <Add
                     todos = {todos}
@@ -35,11 +38,13 @@ function Todos() {
             </div>
 
             <div
-                style = {{
-                    ...border2,
-                    ...pad5,
-                    ...margin5
-                }}
+                style = {
+                    {
+                        ...border2,
+                        ...pad5,
+                        ...margin5
+                    }
+                }
             >
                 <List
                     todos = {todos}
@@ -48,5 +53,6 @@ function Todos() {
         </div>
     )
 }
+
 export default Todos
 //Axel: Max line per file 100
