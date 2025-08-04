@@ -16,7 +16,7 @@ function Todos() {
 
     return (
         <div style = {container}>
-            <div 
+            <div
                 style = {{...container, ...pad5}}
             >
                 <Add
@@ -25,7 +25,7 @@ function Todos() {
                 />
             </div>
 
-            <div 
+            <div
                 style = {{...container, ...pad5}}
             >
                 <List todos = {todos}/>
