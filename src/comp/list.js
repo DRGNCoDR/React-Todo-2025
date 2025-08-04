@@ -11,11 +11,11 @@ function List({todos}) {
     )
 
     return (
-        <div>
+        <>
             <ol>
                 {todoList}
             </ol>
-        </div>
+        </>
     )
 }
 

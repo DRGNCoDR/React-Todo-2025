@@ -38,6 +38,6 @@ function Add ({todos, setTodo}) {
         </>
     )
 }
-export default Add
 
+export default Add
 //Axel: Max line per file 100
